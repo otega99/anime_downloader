@@ -21,14 +21,7 @@ def get_all_videos(question):
     elif answer=='n':
         return False
     else:
-        return download_all("Please enter y or n: ")
-        
-def check_number(question,episodes_dict):
-    number=input(question)
-    if number in episodes_dict:
-        return number
-    else:
-        return check_number("This does not exist, please enter another number: ",episodes_dict)
+        return get_all_videos("Please enter y or n: ")
        
 def download_episode(anime_name,selected_episode,episodes_dict):
     selected_episode_webpage=get_webpage(episodes_dict[selected_episode]["link"])
@@ -38,7 +31,7 @@ def download_episode(anime_name,selected_episode,episodes_dict):
     path="/home/tega/Videos/Anime/"+anime_name
     if os.path.exists(path)==False:
         os.mkdir(path)
-    file_name=video_link.split('/')[-1]
+    file_name=episodes_dict[selected_episode]["name"]+".mp4"
     print("Downloading file {}".format(file_name))
     episode_path=path+"/"+file_name
     r=requests.get(video_link,stream=True)    

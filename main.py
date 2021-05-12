@@ -36,9 +36,21 @@ count=0
 question="\nDo you wish to download all episodes at once? (y/n) "
 
 if web.get_all_videos(question)==False:
-    selection_prompt="\nPlease enter the number of episode you wish to download ,1-{}: ".format(len(episode_list))
-    selected_episode=web.check_number(selection_prompt,episodes_dict)
-    web.download_episode(selected_anime_name,selected_episode,episodes_dict)
+    selection=input("\nPlease enter the number of episode or episodes you wish to download from 1-{} (e.g 1, 3-10): ".format(len(episode_list)))
+    selected_episodes=selection.split("-")
+    if len(selected_episodes)==1:
+        if selection in episodes_dict:
+            web.download_episode(selected_anime_name,selection,episodes_dict)
+        else:
+            print("Episode not found")
+    else:
+        first_episode=int(selected_episodes[0])
+        last_episode=int(selected_episodes[-1])+1
+        for i in range(first_episode,last_episode):
+            if str(i) in episodes_dict:
+                web.download_episode(selected_anime_name,str(i),episodes_dict)      
+            else:
+                print("Episode not found")      
 else:
     for key, value in episodes_dict.items():
         web.download_episode(selected_anime_name,key,episodes_dict)
