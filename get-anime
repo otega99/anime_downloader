@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import web
 
 main_url="https://www1.gogoanime.ai"
@@ -44,8 +45,7 @@ if web.get_all_videos(question)==False:
         else:
             print("Episode not found")
     else:
-        first_episode=int(selected_episodes[0])
-        last_episode=int(selected_episodes[-1])+1
+        first_episode,last_episode=int(selected_episodes[0]),int(selected_episodes[-1])+1
         for i in range(first_episode,last_episode):
             if str(i) in episodes_dict:
                 web.download_episode(selected_anime_name,str(i),episodes_dict)      
